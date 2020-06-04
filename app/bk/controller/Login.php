@@ -12,13 +12,15 @@ use app\Base;
 use think\facade\Request;
 use think\facade\View;
 use app\common\model\Admin;
+use think\facade\Session;
+use think\Response;
 
 class Login extends Base
 {
     public function __construct(){
         parent::__construct();
-        if(!empty(session(ADMIN_ID))){
-            return $this->redirect("bk/index/index");
+        if(!empty(Session::get(ADMIN_ID))){
+            redirect("/bk/index/index")->send();
         }
     }
     
@@ -37,9 +39,9 @@ class Login extends Base
                 return $this->retError("用户名或密码错误");
             }
             
-            session(ADMIN_ID, $admin->id);
-            session(ADMIN_NAME, $admin->username);
-            return $this->retSuccess("登录成功");
+            Session::set(ADMIN_ID, $admin->id);
+            Session::set(ADMIN_NAME, $admin->username);
+            return ["code" => 1, "msg" => "登录成功"];
         }
         return View::fetch();
     }

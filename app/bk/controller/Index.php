@@ -8,11 +8,14 @@
 namespace app\bk\controller;
 
 use app\Base;
+use think\facade\Session;
 
 class Index extends Base
 {
     public function index()
     {
+        $res  = Session::all();
+        var_dump($res);
         echo "bk";
     }
 }
