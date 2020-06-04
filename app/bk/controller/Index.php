@@ -7,15 +7,20 @@
 
 namespace app\bk\controller;
 
-use app\Base;
-use think\facade\Session;
 
-class Index extends Base
+use app\bk\BkBase;
+use think\facade\View;
+
+class Index extends BkBase
 {
     public function index()
     {
-        $res  = Session::all();
-        var_dump($res);
-        echo "bk";
+        
+        return View::fetch();
+    }
+    
+    public function home()
+    {
+        echo time();
     }
 }
