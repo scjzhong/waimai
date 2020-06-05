@@ -12,7 +12,6 @@ class Index extends BkBase
 {
     public function index()
     {
-        echo ADMIN_NAME;
-        echo 1;die;
+        return $this->fetch();
     }
 }

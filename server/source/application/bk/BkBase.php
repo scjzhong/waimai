@@ -8,9 +8,11 @@
 namespace app\bk;
 use think\Controller;
 use think\Session;
+use think\Config;
 
 class BkBase extends Controller
 {
+    
     public $allAction = [
         "passport/login"
     ];
@@ -25,9 +27,53 @@ class BkBase extends Controller
                 $this->redirect("/bk/passport/login");
             }
         }
-        $this->assign("adminName", Session::get(ADMIN_ID));
+        
+        $this->assign("adminName", Session::get(ADMIN_NAME));
     }
     
+    
+
+    
+    /**
+     * 后台菜单配置
+     * @return array
+     */
+    private function menus()
+    {
+        foreach ($data = Config::get('menus') as $group => $first) {
+            $data[$group]['active'] = $group === $this->group;
+            // 遍历：二级菜单
+            if (isset($first['submenu'])) {
+                foreach ($first['submenu'] as $secondKey => $second) {
+                    // 二级菜单所有uri
+                    $secondUris = [];
+                    if (isset($second['submenu'])) {
+                        // 遍历：三级菜单
+                        foreach ($second['submenu'] as $thirdKey => $third) {
+                            $thirdUris = [];
+                            if (isset($third['uris'])) {
+                                $secondUris = array_merge($secondUris, $third['uris']);
+                                $thirdUris = array_merge($thirdUris, $third['uris']);
+                            } else {
+                                $secondUris[] = $third['index'];
+                                $thirdUris[] = $third['index'];
+                            }
+                            $data[$group]['submenu'][$secondKey]['submenu'][$thirdKey]['active'] = in_array($this->routeUri, $thirdUris);
+                        }
+                    } else {
+                        if (isset($second['uris']))
+                            $secondUris = array_merge($secondUris, $second['uris']);
+                            else
+                                $secondUris[] = $second['index'];
+                    }
+                    // 二级菜单：active
+                    !isset($data[$group]['submenu'][$secondKey]['active'])
+                    && $data[$group]['submenu'][$secondKey]['active'] = in_array($this->routeUri, $secondUris);
+                }
+            }
+        }
+        return $data;
+    }
     
     public function retData($data = [], $msg = '')
     {
