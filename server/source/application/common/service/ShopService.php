@@ -69,9 +69,12 @@ class ShopService extends BaseService
             return $this->retError("该手机号已存在，请更换手机号");
         }
         
+        $salt = getRandomString(6);
         $conf = new ShopConf();
         $conf->shop_id      = $shop->id;
         $conf->phone        = $phone;
+        $conf->salt         = $salt;
+        $conf->password     = createPassword($conf->phone, $salt);
         $conf->contact      = $contact;
         $conf->telphone     = $telphone;
         $conf->addr         = $addr;

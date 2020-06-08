@@ -204,4 +204,35 @@ function getAdminName()
 {
     return Session::get(ADMIN_NAME);
 }
+/**
+ * 统一生成密码
+ * @param string $pwd
+ * @param string $salt
+ * @return string
+ */
+function createPassword(string $pwd, string $salt) :string
+{
+    return md5( md5( $pwd ) . $salt );
+}
 
+/**
+ * 登录密码对比
+ * @param string $rawPwd     原始密码
+ * @param string $encryptPwd 加密后的密码
+ * @param string $salt       salt
+ * @return bool
+ */
+function comparePassword(string $rawPwd, string $encryptPwd, string $salt) :bool
+{
+    return createPassword($rawPwd, $salt) === $encryptPwd;
+}
+
+function getRandomString( $length = 8 ) {
+    // 密码字符集，可任意添加你需要的字符
+    $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    $str = '';
+    for ( $i = 0; $i < $length; $i++ ) {
+        $str .= $chars[ mt_rand(0, strlen($chars) - 1) ];
+    }
+    return $str;
+}

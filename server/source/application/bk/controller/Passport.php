@@ -25,7 +25,7 @@ class Passport extends BkBase
                 return $this->retError("用户名或密码错误");
             }
             
-            if(!Admin::comparePassword($password, $admin->password, $admin->salt)){
+            if(!comparePassword($password, $admin->password, $admin->salt)){
                 return $this->retError("用户名或密码错误");
             }
             
