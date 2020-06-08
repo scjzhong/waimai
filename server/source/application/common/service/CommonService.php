@@ -31,4 +31,6 @@ class CommonService extends BaseService
         #TODO redis 缓存
         return Region::where(["level" => 2])->select();
     }
+    
+    
 }

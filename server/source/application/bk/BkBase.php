@@ -78,7 +78,7 @@ class BkBase extends Controller
     public function retData($data = [], $msg = '')
     {
         $data = [
-            'code' => 1,
+            'code' => 0,
             'data' => $data,
             'msg'  => $msg
         ];

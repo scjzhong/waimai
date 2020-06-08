@@ -16,15 +16,16 @@ class Shop extends BkBase
     public function index()
     {
         if($this->request->isAjax()){
-            $ret = ShopService::getInstance()->getAllShops(
-                $this->getPage(),
-                $this->getPageLimit()
-                );
+            $ret = ShopService::getInstance()->getBkAllShops($this->getPage(),$this->getPageLimit());
             return $this->retData($ret->data);
         }
         return $this->fetch();
     }
     
+    /**
+     * 创建一个商家
+     * @return unknown|mixed|string
+     */
     public function add()
     {
         if($this->request->isAjax()){
@@ -46,5 +47,13 @@ class Shop extends BkBase
         $this->assign("cates", CommonService::getAllShopCate());
         $this->assign("citys", CommonService::getAllCity());
         return $this->fetch();
+    }
+    
+    public function status()
+    {
+        $ret = ShopService::getInstance()->updateStatus($this->_filter($this->request->param("id")));
+        if(!$ret->flag)
+            return $this->retError($ret->msg);
+        return $this->retSuccess($ret->msg);
     }
 }

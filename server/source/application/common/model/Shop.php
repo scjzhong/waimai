@@ -11,4 +11,31 @@ class Shop extends Model
 {
     protected $pk = 'id';
     protected $table = 'shop';
+    
+    /**
+     * 配置
+     * @return \think\model\relation\HasOne
+     */
+    public function conf()
+    {
+        return $this->hasOne("ShopConf", "shop_id", "id");
+    }
+    
+    /**
+     * 商家分类
+     * @return \think\model\relation\BelongsTo
+     */
+    public function cate()
+    {
+        return $this->belongsTo("ShopCate", "cate_id", "id");
+    }
+    
+    /**
+     * 商家城市
+     * @return \think\model\relation\BelongsTo
+     */
+    public function city()
+    {
+        return $this->belongsTo("Region", "city_id", "id");
+    }
 }
