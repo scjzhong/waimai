@@ -47,7 +47,7 @@ class Controller extends \think\Controller
     public function _initialize()
     {
         // 商家登录信息
-        $this->store = Session::get('yoshop_store');
+        $this->store = Session::get('store');
         // 当前路由信息
         $this->getRouteinfo();
         // 验证登录
@@ -142,11 +142,7 @@ class Controller extends \think\Controller
             return true;
         }
         // 验证登录状态
-        if (empty($this->store)
-            || (int)$this->store['is_login'] !== 1
-            || !isset($this->store['wxapp'])
-            || empty($this->store['wxapp'])
-        ) {
+        if (empty($this->store) || (int)$this->store['is_login'] !== 1) {
 			$this->redirect('passport/login');
             return false;
         }

@@ -37,7 +37,7 @@ class StoreUser extends StoreUserModel
         // 保存登录状态
         Session::set('store', [
             'user' => [
-                'store_user_id' => $user['store_user_id'],
+                'id' => $user['id'],
                 'user_name' => $user['user_name'],
             ],
             'wxapp' => $user['wxapp']->toArray(),
@@ -77,7 +77,7 @@ class StoreUser extends StoreUserModel
         }
         // 更新session
         Session::set('store.user', [
-            'store_user_id' => $this['store_user_id'],
+            'id' => $this['id'],
             'user_name' => $data['user_name'],
         ]);
         return true;

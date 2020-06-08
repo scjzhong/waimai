@@ -2,8 +2,8 @@
 
 namespace app\store\controller;
 
-use app\store\model\StoreUser;
 use think\Session;
+use app\common\model\Store;
 
 /**
  * 商户认证
@@ -22,11 +22,21 @@ class Passport extends Controller
     public function login()
     {
         if ($this->request->isAjax()) {
-            $model = new StoreUser;
-            if ($model->login($this->postData('User'))) {
-                return $this->renderSuccess('登录成功', url('index/index'));
+            $data = $this->postData('User');
+            $store = Store::where("phone", $data["user_name"])->find();
+            if(empty($store) || !comparePassword($data["password"], $store->password, $store->salt)){
+                return $this->renderError("用户名或密码错误");
             }
-            return $this->renderError($model->getError() ?: '登录失败');
+            
+            Session::set('store', [
+                'user' => [
+                    'id' => $store['id'],
+                    'phone' => $store['phone'],
+                ],
+                'is_login' => true,
+            ]);
+            
+            return $this->renderSuccess('登录成功', url('index/index'));
         }
         $this->view->engine->layout(false);
         return $this->fetch('login');
@@ -37,7 +47,7 @@ class Passport extends Controller
      */
     public function logout()
     {
-        Session::clear('yoshop_store');
+        Session::clear('store');
         $this->redirect('passport/login');
     }
 

@@ -50,8 +50,7 @@ class BaseModel extends Model
      */
     protected static function setStoreWxappId()
     {
-        $session = Session::get('yoshop_store');
-        !empty($session) && self::$wxapp_id = $session['wxapp']['wxapp_id'];
+        $session = Session::get('store');
     }
 
     /**
