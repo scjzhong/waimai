@@ -11,8 +11,10 @@ namespace app\common\service;
 use think\Db;
 use app\common\model\ShopConf;
 use app\common\model\Shop;
+use app\common\model\Store;
+use app\common\model\StoreConf;
 
-class ShopService extends BaseService
+class StoreService extends BaseService
 {
     private static $_instance;
     private function __construct(){}
@@ -25,24 +27,24 @@ class ShopService extends BaseService
     }
     
     
-    public function getBkAllShops($page, $limit)
+    public function getBkAllStores($page, $limit)
     {
-        $query = Shop::field("*");
+        $query = Store::field("*");
         $count = $query->count();
         if(0 == $count)
             return $this->retData(["list" => [], "count" => $count]);
-        $shops = $query->order("id", "desc")->page($page, $limit)->select();
+        $stores = $query->order("id", "desc")->page($page, $limit)->select();
         $lists = [];
-        foreach ($shops as $shop){
+        foreach ($stores as $store){
             $lists[] = [
-                "id" => $shop->id,
-                "name" => $shop->name,
-                "phone" => $shop->phone,
-                "status" => $shop->status,
-                "city" => $shop->city->name,
-                "addr" => $shop->conf->addr,
-                "cate_name" => $shop->cate->name,
-                "create_time" => $shop->create_time
+                "id" => $store->id,
+                "name" => $store->name,
+                "phone" => $store->phone,
+                "status" => $store->status,
+                "city" => $store->city->name,
+                "addr" => $store->conf->addr,
+                "cate_name" => $store->cate->name,
+                "create_time" => $store->create_time
             ];
         }
         return $this->retData(["list" => $lists, "count" => $count]);
@@ -61,7 +63,7 @@ class ShopService extends BaseService
      * @param int $city_id
      * @return stdClass
      */
-    public function createShop($name, $phone, $contact, $telphone, $addr, $cate_id, $status, $rate, $city_id)
+    public function createStore($name, $phone, $contact, $telphone, $addr, $cate_id, $status, $rate, $city_id)
     {
         if(empty($name))
             return $this->retError("请输入店铺名称");
@@ -83,32 +85,31 @@ class ShopService extends BaseService
         
         Db::startTrans();
         
-        $phoneShop = Shop::where("phone", $phone)->find();
-        if(!empty($phoneShop)){
+        $phoneStore = Store::where("phone", $phone)->find();
+        if(!empty($phoneStore)){
             Db::rollBack();
             return $this->retError("该手机号已存在，请更换手机号");
         }
         
         $salt = getRandomString(6);
-        $shop = new Shop();
-        $shop->name         = $name;
-        $shop->phone        = $phone;
-        $shop->salt         = $salt;
-        $shop->password     = createPassword($shop->phone, $salt);
-        $shop->cate_id      = $cate_id;
-        $shop->status       = $status == "on" ? 1 : 0;
-        $shop->city_id      = $city_id;
-        $shop->create_uid   = getAdminId();
-        $shop->update_time  = time();
-        $shop->create_time  = time();
-        if(!$shop->save()){
+        $store = new Store();
+        $store->name         = $name;
+        $store->phone        = $phone;
+        $store->salt         = $salt;
+        $store->password     = createPassword($store->phone, $salt);
+        $store->cate_id      = $cate_id;
+        $store->status       = $status == "on" ? 1 : 0;
+        $store->city_id      = $city_id;
+        $store->create_uid   = getAdminId();
+        $store->update_time  = time();
+        $store->create_time  = time();
+        if(!$store->save()){
             Db::rollBack();
             return $this->retError("商家添加失败");
         }
         
-        $conf = new ShopConf();
-        $conf->shop_id      = $shop->id;
-        
+        $conf = new StoreConf();
+        $conf->store_id     = $store->id;
         $conf->contact      = $contact;
         $conf->telphone     = $telphone;
         $conf->addr         = $addr;
@@ -130,7 +131,7 @@ class ShopService extends BaseService
      */
     public function updateStatus($id)
     {
-        $shop = Shop::find($id);
+        $shop = Store::find($id);
         if(empty($shop))
             return $this->retError("商家店铺不存在");
         $shop->status       = $shop->status == 1 ? 0 : 1;

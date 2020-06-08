@@ -19,13 +19,13 @@ class User extends Controller
      */
     public function renew()
     {
-        $model = StoreUserModel::detail($this->store['user']['store_user_id']);
+/*         $model = StoreUserModel::detail($this->store['user']['id']);
         if ($this->request->isAjax()) {
             if ($model->renew($this->postData('user'))) {
                 return $this->renderSuccess('更新成功');
             }
             return $this->renderError($model->getError() ?: '更新失败');
         }
-        return $this->fetch('renew', compact('model'));
+        return $this->fetch('renew', compact('model')); */
     }
 }

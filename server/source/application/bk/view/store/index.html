@@ -7,7 +7,7 @@
           <div class="layui-card-header">商家列表</div>
           <div class="layui-card-body">
             <div class="layui-btn-group list-btn" style="margin-bottom: 10px;">
-              <a class="layui-btn tab-page" href="/bk/shop/add" id="add"><i class="layui-icon layui-icon-add-1" style="font-size: 15px;"></i>添加</a>
+              <a class="layui-btn tab-page" href="/bk/store/add" id="add"><i class="layui-icon layui-icon-add-1" style="font-size: 15px;"></i>添加</a>
             </div>
             
             <table class="layui-hide" id="list" lay-filter="list"></table>
@@ -41,7 +41,7 @@
 		var tableIn = table.render({
 		    id: "list",
 			elem: '#list',
-		    url: '/bk/shop/index',
+		    url: '/bk/store/index',
 			cellMinWidth: 80,
 			size: 'sm',
 			parseData: function(res){ //res 即为原始返回的数据
@@ -86,7 +86,7 @@
 	  	} else if(obj.event === 'edit'){
 	    	layer.alert('编辑行：<br>'+ JSON.stringify(data))
 	  	} else if(obj.event === 'status'){
-	  		$.post("/bk/shop/status", {id:obj.data.id},function(res) {
+	  		$.post("/bk/store/status", {id:obj.data.id},function(res) {
                 if(res.code === 1) {
                     layer.msg(res.msg,{time:2000, icon:1}, function(){
                     	tableIn.reload();

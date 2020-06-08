@@ -7,9 +7,8 @@
  */
 namespace app\common\service;
 
-
-use app\common\model\ShopCate;
 use app\common\model\Region;
+use app\common\model\StoreCate;
 
 class CommonService extends BaseService
 { 
@@ -17,9 +16,9 @@ class CommonService extends BaseService
      * 获取所有的商家店铺分类
      * @return array
      */
-    public static function getAllShopCate()
+    public static function getAllStoreCate()
     {
-        return ShopCate::select();
+        return StoreCate::select();
     }
     
     /**

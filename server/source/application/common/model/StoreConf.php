@@ -7,8 +7,8 @@
 namespace app\common\model;
 use think\Model;
 
-class ShopConf extends Model
+class StoreConf extends Model
 {
     protected $pk = 'id';
-    protected $table = 'shop_conf';
+    protected $table = 'store_conf';
 }

@@ -11,12 +11,13 @@ namespace app\bk\controller;
 use app\bk\BkBase;
 use app\common\service\ShopService;
 use app\common\service\CommonService;
-class Shop extends BkBase
+use app\common\service\StoreService;
+class Store extends BkBase
 {
     public function index()
     {
         if($this->request->isAjax()){
-            $ret = ShopService::getInstance()->getBkAllShops($this->getPage(),$this->getPageLimit());
+            $ret = StoreService::getInstance()->getBkAllStores($this->getPage(),$this->getPageLimit());
             return $this->retData($ret->data);
         }
         return $this->fetch();
@@ -29,7 +30,7 @@ class Shop extends BkBase
     public function add()
     {
         if($this->request->isAjax()){
-            $ret = ShopService::getInstance()->createShop(
+            $ret = StoreService::getInstance()->createStore(
                 $this->_filter($this->request->param('name')),
                 $this->_filter($this->request->param('phone')),
                 $this->_filter($this->request->param('contact')),
@@ -44,14 +45,14 @@ class Shop extends BkBase
                 return $this->retSuccess($ret->msg);
             return $this->retError($ret->msg);
         }
-        $this->assign("cates", CommonService::getAllShopCate());
+        $this->assign("cates", CommonService::getAllStoreCate());
         $this->assign("citys", CommonService::getAllCity());
         return $this->fetch();
     }
     
     public function status()
     {
-        $ret = ShopService::getInstance()->updateStatus($this->_filter($this->request->param("id")));
+        $ret = StoreService::getInstance()->updateStatus($this->_filter($this->request->param("id")));
         if(!$ret->flag)
             return $this->retError($ret->msg);
         return $this->retSuccess($ret->msg);

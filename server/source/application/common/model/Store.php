@@ -18,7 +18,7 @@ class Store extends Model
      */
     public function conf()
     {
-        return $this->hasOne("ShopConf", "shop_id", "id");
+        return $this->hasOne("StoreConf", "store_id", "id");
     }
     
     /**
@@ -27,7 +27,7 @@ class Store extends Model
      */
     public function cate()
     {
-        return $this->belongsTo("ShopCate", "cate_id", "id");
+        return $this->belongsTo("StoreCate", "cate_id", "id");
     }
     
     /**
