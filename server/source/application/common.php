@@ -3,6 +3,7 @@
 // 应用公共函数库文件
 
 use think\Request;
+use think\Session;
 
 /**
  * 打印调试函数
@@ -184,3 +185,23 @@ function getGuidV4($trim = true)
         $rbrace;
     return $guidv4;
 }
+
+function is_phone($phone) {
+    return preg_match("/^1[345789]\d{9}$/", $phone) == 1 ? true : false;
+}
+
+//是否是正确的价格（整数 或 两位小数）
+function is_price($price) {
+    return preg_match('/^[0-9]+(.[0-9]{1,2})?$/', $price) ? true : false;
+}
+
+function getAdminId()
+{
+    return Session::get(ADMIN_ID);
+}
+
+function getAdminName()
+{
+    return Session::get(ADMIN_NAME);
+}
+

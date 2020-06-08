@@ -28,8 +28,20 @@ class Shop extends BkBase
     public function add()
     {
         if($this->request->isAjax()){
-            $ret = ShopService::getInstance()->addShop();
-            return $this->retData($ret->data);
+            $ret = ShopService::getInstance()->createShop(
+                $this->_filter($this->request->param('name')),
+                $this->_filter($this->request->param('phone')),
+                $this->_filter($this->request->param('contact')),
+                $this->_filter($this->request->param('telphone')),
+                $this->_filter($this->request->param('addr')),
+                $this->_filter($this->request->param('cate_id')),
+                $this->_filter($this->request->param('status')),
+                $this->_filter($this->request->param('rate')),
+                $this->_filter($this->request->param('city_id'))
+            );
+            if($ret->flag)
+                return $this->retSuccess($ret->msg);
+            return $this->retError($ret->msg);
         }
         $this->assign("cates", CommonService::getAllShopCate());
         $this->assign("citys", CommonService::getAllCity());

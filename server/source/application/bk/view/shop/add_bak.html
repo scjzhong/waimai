@@ -1,0 +1,268 @@
+{include file="common/head"/}
+<style>
+	.layui-form-label{
+		width:150px;
+	}
+</style>
+  <div class="layui-fluid">
+    <div class="layui-card">
+      <div class="layui-card-header">表单组合</div>
+      <div class="layui-card-body" style="padding: 15px;">
+        <form class="layui-form" action="" lay-filter="component-form-group">
+          <div class="layui-form-item">
+            <label class="layui-form-label">店铺名称</label>
+            <div class="layui-input-inline" style="width: 500px;">
+              <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入店铺名称" class="layui-input">
+            </div>
+          </div>
+          
+          <div class="layui-form-item">
+	            <div class="layui-inline">
+	              <label class="layui-form-label">商家手机号</label>
+	              <div class="layui-input-inline" style="width: 500px;">
+	                <input type="text" name="phone" lay-verify="phone" placeholder="请输入商家手机号" autocomplete="off" class="layui-input">
+	              </div>
+	            </div>
+	          </div>
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">商家联系人</label>
+              <div class="layui-input-inline" style="width: 500px;">
+                <input type="text" name="contact" lay-verify="required" placeholder="请输入商家联系人" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">商家联系电话</label>
+              <div class="layui-input-inline" style="width: 500px;">
+                <input type="text" name="telphone" lay-verify="required" placeholder="请输入商家联系电话" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+          </div>
+          
+          <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">商家详细地址</label>
+            <div class="layui-input-block">
+              <textarea name="addr" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+          </div>      
+          
+          <div class="layui-form-item">
+			 <div class="layui-inline">
+	             <label class="layui-form-label">请选择商家分类</label>
+	             <div class="layui-input-inline">
+	               <select name="cate_id" lay-verify="required" lay-search="">
+	                 <option value="">直接选择或搜索选择</option>
+	                 {volist name="cates" id="vo"}<option value="{$vo.id}">{$vo.name}</option>{/volist}
+	               </select>
+	             </div>
+	           </div>
+	        </div>
+
+          <div class="layui-form-item">
+	            <label class="layui-form-label">是否启用</label>
+	            <div class="layui-input-block">
+	                <input type="radio" name="status" lay-filter="status" checked value="on" title="开启">
+	                <input type="radio" name="status" lay-filter="status" value="off" title="关闭">
+	            </div>
+	        </div>
+          
+          <div class="layui-form-item">
+			 <div class="layui-inline">
+	             <label class="layui-form-label">所属城市</label>
+	             <div class="layui-input-inline">
+	               <select name="city_id" lay-verify="required" lay-search="">
+	                 <option value="">直接选择或搜索选择</option>
+	                 {volist name="citys" id="vo"}<option value="{$vo.id}">{$vo.name}</option>{/volist}
+	               </select>
+	             </div>
+	           </div>
+	        </div>
+	        
+	        <div class="layui-form-item">
+		        <div class="layui-inline">
+		            <label class="layui-form-label">纬度</label>
+		            <div class="layui-input-inline">
+		                <input type="text" name="lat" id="bdlat" class="layui-input" value="">
+		            </div>
+		        </div>
+		        <div class="layui-inline">
+		            <label class="layui-form-label">经度</label>
+		            <div class="layui-input-inline">
+		                <input type="text" name="lng" id="bdlng" class="layui-input" value="">
+		            </div>
+		        </div>
+		    </div>
+		    
+	        <div class="layui-form-item layui-form-text">
+		        <label class="layui-form-label">地图</label>
+		        <div class="layui-input-block">
+		            <input id="where" name="where" type="text" width="200px" ><input type="button" value="地图上找" class="layui-btn" id="searchbd" /> <br /> 
+		            <div style="width:80%;height:340px;border:1px solid #ccc" id="container"></div>
+		        </div>
+		    </div>
+		    
+		    
+		    <div class="layui-form-item">
+	            <div class="layui-inline">
+	              <label class="layui-form-label">起送价格</label>
+	              <div class="layui-input-inline" style="width: 100px;">
+	                <input type="number" name="min_price" lay-verify="required" placeholder="￥" autocomplete="off" class="layui-input">
+	              </div>
+	            </div>
+	          </div>
+          
+          
+          <div class="layui-form-item">
+            <label class="layui-form-label">配送时间（分钟）</label>
+            <div class="layui-input-inline" style="width: 100px;">
+              <input type="number" name="delivery_time" lay-verify="required" placeholder="请输入配送时间" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          
+          <div class="layui-form-item">
+            <label class="layui-form-label">配送距离（米）</label>
+            <div class="layui-input-inline" style="width: 100px;">
+              <input type="number" name="delivery_distance" lay-verify="required" placeholder="请输入配送距离" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          
+          <!-- <div class="layui-form-item">
+            <label class="layui-form-label">最大配送距离（米）</label>
+            <div class="layui-input-inline" style="width: 100px;">
+              <input type="number" name="max_distance" lay-verify="required" placeholder="请输入配送距离" autocomplete="off" class="layui-input">
+            </div>
+          </div> -->
+          
+          <div class="layui-form-item">
+            <label class="layui-form-label">配送费</label>
+            <div class="layui-input-inline" style="width: 100px;">
+              <input type="number" name="delivery_price" lay-verify="required" placeholder="请输入配送费" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          
+          <div class="layui-form-item">
+            <label class="layui-form-label">打包费用</label>
+            <div class="layui-input-inline" style="width: 100px;">
+              <input type="number" name="pack_price" lay-verify="required" placeholder="请输入配送费" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          
+                
+          <div class="layui-form-item layui-layout-admin">
+            <div class="layui-input-block">
+              <div class="layui-footer" style="left: 0;">
+                <button class="layui-btn" lay-submit="" lay-filter="add">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    
+	<script src="/layuiadmin/layui/layui.js"></script>  
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=GV3YqEkDwpOZroIrcS7zog7cqrPtxjh4"></script>
+	<script>
+		layui.config({
+		  base: '../../layuiadmin/' //静态资源所在路径
+		}).extend({
+		  index: 'lib/index' //主入口模块
+		}).use(['index', 'form', 'laydate', 'upload'], function(){
+			  var $ = layui.$
+			  ,admin = layui.admin
+			  ,element = layui.element
+			  ,layer = layui.layer
+			  ,laydate = layui.laydate
+			  ,form = layui.form
+			  ,upload = layui.upload;
+			
+			//地图搜索
+			    $("#searchbd").on("click", function(){
+			    	var result = $('#where').val();
+			        var local = new BMap.LocalSearch(map, {
+			            renderOptions: {map: map}
+			        });
+			        local.search(result);
+			    })
+			    
+			    //清除地图所有点
+			    function deletePoint() {
+			        var allOverlay = map.getOverlays();
+			        for (var i = 0; i < allOverlay.length - 1; i++) {
+			            map.removeOverlay(allOverlay[i]);
+			        }
+			    }
+			  
+				var lat = $('#bdlat').val();
+			    var lng = $('#bdlng').val();
+
+			    var map = new BMap.Map("container");//在指定的容器内创建地图实例 
+			    map.setDefaultCursor("crosshair");//设置地图默认的鼠标指针样式 
+			    map.enableScrollWheelZoom();//启用滚轮放大缩小，默认禁用。 
+			    var point = new BMap.Point(lng, lat);
+			    map.centerAndZoom(point, 13);
+
+			    map.addEventListener("click", function (e) {
+			        $('#bdlat').val(e.point.lat);
+			        $('#bdlng').val(e.point.lng);
+			        map.addOverlay(new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat)));
+			        deletePoint();
+			    });
+
+			    if (lat < 10 && lng < 100) {
+			        toLocation();
+			    } else {
+			        map.addOverlay(new BMap.Marker(point));
+			    }
+
+			    // 定位
+			    function toLocation() {
+			        var geolocation = new BMap.Geolocation();
+			        geolocation.getCurrentPosition(function (r) {
+			            if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+			                var myIcon = new BMap.Icon("/style/mobile/images/location/dd_01.png", new BMap.Size(30, 30));
+			                var marker = new BMap.Marker(r.point, {icon: myIcon});
+			                map.addOverlay(marker);
+			                map.panTo(r.point);
+			            }
+			        }, {enableHighAccuracy: true})
+			    }
+			  
+			  
+			    form.render(null, 'component-form-group');
+			
+			  laydate.render({
+			    elem: '#LAY-component-form-group-date'
+			  });
+			  
+			  
+			  /* 监听提交 */
+			  form.on('submit(add)', function(data){
+				  var loading = layer.load(1, {shade: [0.2,'#fff']});
+			      	$.ajax({
+			      		url: "/bk/shop/add",
+			      		type: 'post',
+				      	data: data.field,
+				      	dataType: 'json',
+				      	success: function (res) {
+				      		layer.close(loading);
+				      		if(res.code == 1){
+				      			console.log(res);
+				      		}else{
+				      			console.log(res);
+				      		}
+				       	},
+				       	error: function (e) {
+				       		layer.close(loading);
+				     		layer.msg("服务器繁忙请稍后再试",{time:2000});
+				      	}
+					});
+			      	return false;
+			  });
+		});
+	</script>
+{include file="common/foot"/}
