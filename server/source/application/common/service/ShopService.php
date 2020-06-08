@@ -37,7 +37,7 @@ class ShopService extends BaseService
             $lists[] = [
                 "id" => $shop->id,
                 "name" => $shop->name,
-                "phone" => $shop->conf->phone,
+                "phone" => $shop->phone,
                 "status" => $shop->status,
                 "city" => $shop->city->name,
                 "addr" => $shop->conf->addr,
@@ -82,8 +82,19 @@ class ShopService extends BaseService
         }
         
         Db::startTrans();
+        
+        $phoneShop = Shop::where("phone", $phone)->find();
+        if(!empty($phoneShop)){
+            Db::rollBack();
+            return $this->retError("该手机号已存在，请更换手机号");
+        }
+        
+        $salt = getRandomString(6);
         $shop = new Shop();
         $shop->name         = $name;
+        $shop->phone        = $phone;
+        $shop->salt         = $salt;
+        $shop->password     = createPassword($shop->phone, $salt);
         $shop->cate_id      = $cate_id;
         $shop->status       = $status == "on" ? 1 : 0;
         $shop->city_id      = $city_id;
@@ -95,18 +106,9 @@ class ShopService extends BaseService
             return $this->retError("商家添加失败");
         }
         
-        $phoneConf = ShopConf::where("phone", $phone)->find();
-        if(!empty($phoneConf)){
-            Db::rollBack();
-            return $this->retError("该手机号已存在，请更换手机号");
-        }
-        
-        $salt = getRandomString(6);
         $conf = new ShopConf();
         $conf->shop_id      = $shop->id;
-        $conf->phone        = $phone;
-        $conf->salt         = $salt;
-        $conf->password     = createPassword($conf->phone, $salt);
+        
         $conf->contact      = $contact;
         $conf->telphone     = $telphone;
         $conf->addr         = $addr;
