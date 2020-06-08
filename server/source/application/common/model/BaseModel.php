@@ -13,7 +13,7 @@ use think\Session;
  */
 class BaseModel extends Model
 {
-    public static $wxapp_id;
+    public static $store_id;
     public static $base_url;
 
     /**
@@ -32,8 +32,8 @@ class BaseModel extends Model
      * 后期静态绑定类名称
      * 用于定义全局查询范围的wxapp_id条件
      * 子类调用方式:
-     *   非静态方法:  self::$wxapp_id
-     *   静态方法中:  $self = new static();   $self::$wxapp_id
+     *   非静态方法:  self::$store_id
+     *   静态方法中:  $self = new static();   $self::$store_id
      * @param $calledClass
      */
     private static function bindWxappId($calledClass)
@@ -51,7 +51,7 @@ class BaseModel extends Model
     protected static function setStoreWxappId()
     {
         $session = Session::get('store');
-        !empty($session) && self::$wxapp_id = $session['user']['id'];
+        !empty($session) && self::$store_id = $session['user']['id'];
     }
 
     /**
@@ -60,7 +60,7 @@ class BaseModel extends Model
     protected static function setApiWxappId()
     {
         $request = Request::instance();
-        self::$wxapp_id = $request->param('wxapp_id');
+        self::$store_id = $request->param('wxapp_id');
     }
 
     /**
@@ -81,8 +81,8 @@ class BaseModel extends Model
      */
     protected function base($query)
     {
-        if (self::$wxapp_id > 0) {
-            $query->where($query->getTable() . '.wxapp_id', self::$wxapp_id);
+        if (self::$store_id > 0) {
+            $query->where($query->getTable() . '.wxapp_id', self::$store_id);
         }
     }
 
