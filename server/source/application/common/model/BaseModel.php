@@ -51,6 +51,7 @@ class BaseModel extends Model
     protected static function setStoreWxappId()
     {
         $session = Session::get('store');
+        !empty($session) && self::$wxapp_id = $session['user']['id'];
     }
 
     /**
