@@ -2,10 +2,10 @@
 
 // 数据库配置
 $config = [
-    'host' => '127.0.0.1',
+    'host' => '47.100.161.112',
     'database' => 'waimai',
     'username' => 'root',
-    'password' => 'root',
+    'password' => 'nihao123***',
     'port' => '3306',
     'charset' => 'utf8mb4',
 ];
