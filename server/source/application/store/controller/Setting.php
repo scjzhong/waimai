@@ -4,6 +4,8 @@ namespace app\store\controller;
 
 use app\common\library\sms\Driver as SmsDriver;
 use app\store\model\Setting as SettingModel;
+use app\common\model\Store;
+use app\common\model\UploadFile;
 
 /**
  * 系统设置
@@ -103,6 +105,18 @@ class Setting extends Controller
             return $this->renderSuccess('更新成功');
         }
         return $this->renderError('更新失败');
+    }
+    
+    public function conf()
+    {
+        if ($this->request->isAjax()) {
+            return ;
+        }
+        $store = Store::where("id", $this->store["user"]["id"])->find();
+        $img = UploadFile::where("file_id", $store->img_id)->find();
+        $this->assign("img", $img);
+        $this->assign("conf", $store);
+        return $this->fetch();
     }
 
 }

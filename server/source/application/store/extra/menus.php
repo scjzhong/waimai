@@ -134,6 +134,10 @@ return [
         'index' => 'setting/store',
         'submenu' => [
             [
+                'name' => '店铺设置',
+                'index' => 'setting/conf',
+            ],
+            [
                 'name' => '商城设置',
                 'index' => 'setting/store',
             ],
