@@ -13,7 +13,7 @@ use think\Session;
  */
 class BaseModel extends Model
 {
-    public static $store_id;
+    public static $wxapp_id;
     public static $base_url;
 
     /**
@@ -51,7 +51,7 @@ class BaseModel extends Model
     protected static function setStoreWxappId()
     {
         $session = Session::get('store');
-        !empty($session) && self::$store_id = $session['user']['id'];
+        !empty($session) && self::$wxapp_id = $session['user']['id'];
     }
 
     /**
@@ -60,7 +60,7 @@ class BaseModel extends Model
     protected static function setApiWxappId()
     {
         $request = Request::instance();
-        self::$store_id = $request->param('wxapp_id');
+        self::$wxapp_id = $request->param('wxapp_id');
     }
 
     /**
@@ -81,8 +81,8 @@ class BaseModel extends Model
      */
     protected function base($query)
     {
-        if (self::$store_id > 0) {
-            $query->where($query->getTable() . '.wxapp_id', self::$store_id);
+        if (self::$wxapp_id > 0) {
+            $query->where($query->getTable() . '.wxapp_id', self::$wxapp_id);
         }
     }
 
