@@ -62,7 +62,7 @@ class UploadFile extends BaseModel
      */
     public function getList($group_id, $file_type = 'image')
     {
-        $model = $this->where(['file_type' => $file_type, 'is_delete' => 0]);
+        $model = $this->where(['file_type' => $file_type, 'is_delete' => 0, "wxapp_id" => self::$wxapp_id]);
         if ($group_id !== -1) {
             $model->where(compact('group_id'));
         }
