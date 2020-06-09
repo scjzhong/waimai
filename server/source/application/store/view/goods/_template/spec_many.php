@@ -34,7 +34,6 @@
         <th>销售价</th>
         <th>划线价</th>
         <th>库存</th>
-        <th>重量(kg)</th>
     </tr>
     {{ each spec_list item }}
     <tr data-index="{{ $index }}" data-sku-id="{{ item.spec_sku_id }}">
@@ -55,10 +54,6 @@
         </td>
         <td>
             <input type="number" name="stock_num" value="{{ item.form.stock_num }}" class="am-field-valid ipt-w80"
-                   required>
-        </td>
-        <td>
-            <input type="number" name="goods_weight" value="{{ item.form.goods_weight }}" class="am-field-valid ipt-w80"
                    required>
         </td>
     </tr>

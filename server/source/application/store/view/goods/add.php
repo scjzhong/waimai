@@ -128,9 +128,9 @@
                                             <div class="am-form-group">
                                                 <input type="number" data-type="stock_num" placeholder="库存数量">
                                             </div>
-                                            <div class="am-form-group">
+                                            <!-- <div class="am-form-group">
                                                 <input type="number" data-type="goods_weight" placeholder="重量">
-                                            </div>
+                                            </div> -->
                                             <div class="am-form-group">
                                                 <button type="button" class="btn-specBatchBtn am-btn am-btn-sm am-btn-secondary
                                                  am-radius">确定
@@ -172,13 +172,13 @@
                                                required>
                                     </div>
                                 </div>
-                                <div class="am-form-group">
+                                <!-- <div class="am-form-group">
                                     <label class="am-u-sm-3 am-u-lg-2 am-form-label form-require">商品重量(Kg) </label>
                                     <div class="am-u-sm-9 am-u-end">
                                         <input type="number" class="tpl-form-input" name="goods[spec][goods_weight]"
                                                required>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="am-form-group">
@@ -209,7 +209,7 @@
                             <div class="widget-head am-cf">
                                 <div class="widget-title am-fl">其他</div>
                             </div>
-                            <div class="am-form-group">
+                            <!-- <div class="am-form-group">
                                 <label class="am-u-sm-3 am-u-lg-2 am-form-label form-require">运费模板 </label>
                                 <div class="am-u-sm-9 am-u-end">
                                     <select name="goods[delivery_id]" required
@@ -225,7 +225,7 @@
                                         <a href="<?= url('setting.delivery/add') ?>">去添加</a>
                                     </small>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-u-lg-2 am-form-label form-require">商品状态 </label>
                                 <div class="am-u-sm-9 am-u-end">
